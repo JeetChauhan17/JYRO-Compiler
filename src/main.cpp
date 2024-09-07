@@ -14,23 +14,68 @@ enum class TokenType{
 
 struct Token{
     TokenType type;
-    std::optional<std::string> value;
+    std::optional<std::string> value {};
 };
 
 
-// remember soldier, switching to  a vector is faster tha reloading
+// remember soldier, switching to  a vector is faster tha using list or reloading
 // personal hate to list
 
 std::vector<Token> tokenize (const std::string& str){
     // iterate through each word and tokenise it. assuming its ascii lol
-    for(char c : str){
-        std::cout<< c << std::endl;
+
+    std::vector<Token> tokens;
+    
+    std::string buf; // creating a string buffer and initialising it to nothing
+    for(int i = 0; i< str.length(); i++){
+        char c = str.at(i);
+        if(isalpha(c)){
+            buf.push_back(c); //adding new element at the end of the buffer.
+            i++;
+
+            while(std::isalnum(str.at(i))){
+                buf.push_back(str.at(i));
+                i++;
+            }
+            i--; // fixes the one char ahead thing. REFACTOR later.
+        if(buf == "return"){
+            tokens.push_back({.type = TokenType::jreturn});
+            buf.clear(); //clear buffer after a word has been detected and tokenised.
+            continue;
+        } else{
+            std::cerr<<"ya messed up"<<std::endl;
+            exit(EXIT_FAILURE);
+        }
+        }
+        else if(std::isdigit(c)){
+            buf.push_back(c);
+            i++;
+            while(std::isdigit(str.at(i))){
+                buf.push_back(str.at(i));
+                i++;
+            }
+            i--;
+            tokens.push_back({.type = TokenType::int_lit, .value = buf});
+            buf.clear();
+        }
+        else if(c == ';'){
+            tokens.push_back({.type = TokenType::jemi});
+        }
+        else if(std::isspace(c)){
+            continue;
+        }
+        else{
+            std::cerr<<"YA MESSED UP"<<std::endl;
+            exit(EXIT_FAILURE);
+        }
+
     }
 
     // 3rd approah: if i see a letter, i'll start readig it into a buffer until its no loger a letter or no,
     // that'll maybe help find out what the buffer contains and it its a token.
 
     // todo : fix segfault (add ret whe i have cotent worth returing)
+    return tokens;
 }
 
 int main(int argc, char* argv[]){
@@ -53,8 +98,8 @@ int main(int argc, char* argv[]){
 
 
 
-    // std::cout<<contents<<std::endl; //works heheheha
     tokenize(contents);
+    std::cout<<"helloworld"<<std::endl; //works heheheha
     return EXIT_SUCCESS;
     
 }
