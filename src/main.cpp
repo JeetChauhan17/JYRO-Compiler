@@ -78,6 +78,33 @@ std::vector<Token> tokenize (const std::string& str){
     return tokens;
 }
 
+
+// Coverting to assembly  tokens -> assenbly:
+std::string tokens_to_asm(std::vector<Token>& tokens) {
+    std::stringstream output;
+    output << "global _start\n_start:\n";
+    for(int i = 0; i<tokens.size(); i++){
+        const Token& token = tokens.at(i);
+        if(token.type == TokenType::jreturn){
+
+            // very jank pattern solution. FIX later. to figure out if we have a return keyword, we need a int literal and a following semicolon. 
+            
+            if(i+1 < tokens.size() && tokens.at(i+1).type == TokenType::int_lit){
+                if(i+2 < tokens.size() && tokens.at(i+2).type == TokenType::jemi){
+                    output << "    mov rax, 60\n";
+                    output << "    mov rdi, "<<tokens.at(i+1).value.value()<< "\n";
+                    output << "    syscall ";
+                }
+
+            }
+        }
+    }
+    return output.str();
+}
+
+
+
+
 int main(int argc, char* argv[]){
     // dont let the arg to be 0 or 1:
     if(argc != 2){
@@ -99,7 +126,8 @@ int main(int argc, char* argv[]){
 
 
     tokenize(contents);
-    std::cout<<"helloworld"<<std::endl; //works heheheha
+    std::vector<Token> tokens = tokenize(contents);
+    std::cout<<tokens_to_asm(tokens)<<std::endl; //works heheheha
     return EXIT_SUCCESS;
     
 }
