@@ -15,7 +15,7 @@ JYRO is a compiler for a custom programming language designed by me `.jj` files.
 
 ### Prerequisites
 
-- **Linux OS**: JYRO uses GNU ld for linking, so it is compatible with Linux systems only.
+- **Linux OS**: JYRO uses GNU ld for linking, so it is compatible with Linux systems only. (windoes and mac patch comming soon)
 - **CMake**: For building the project.
 - **C++ Compiler**: Required for compiling the source code.
 
