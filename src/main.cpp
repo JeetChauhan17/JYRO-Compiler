@@ -22,15 +22,15 @@ struct Token{
 // personal hate to list
 
 std::vector<Token> tokenize (const std::string& str){
-    // iterate through each word and tokenise it. assuming its ascii lol
+
 
     std::vector<Token> tokens;
     
-    std::string buf; // creating a string buffer and initialising it to nothing
+    std::string buf;
     for(int i = 0; i< str.length(); i++){
         char c = str.at(i);
         if(isalpha(c)){
-            buf.push_back(c); //adding new element at the end of the buffer.
+            buf.push_back(c); 
             i++;
 
             while(std::isalnum(str.at(i))){
@@ -112,8 +112,6 @@ int main(int argc, char* argv[]){
         std::cerr<<"Jyro <input.jj>"<<std::endl;
         return EXIT_FAILURE;
     }
-
-    // reading the file:. we are giving the file path and then using it as input.
 
     std::string contents;
     {
