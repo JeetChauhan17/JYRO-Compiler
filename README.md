@@ -1,4 +1,4 @@
-# JYRO - A C++ Based Compiler
+# JYRO - A Custom Compiler
 
 JYRO is a compiler for a custom programming language designed by me `.jj` files. It converts source code into assembly, builds an object file, links it, and runs it on Linux systems using GNU ld. This project represents `version 1.0` of the compiler, focusing on the core functionalities of parsing, tokenization, and assembly generation.
 
